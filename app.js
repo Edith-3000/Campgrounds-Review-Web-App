@@ -16,12 +16,26 @@ var campgroundRoutes  = require("./routes/campgrounds"),
     indexRoutes        = require("./routes/index");
 
 const mongoose = require('mongoose');
+
+//FOR USING mongoDB Atlas
+mongoose.connect('mongodb+srv://kapil:opc107@yelpcampdb.0zt0i.mongodb.net/YelpCampDb?retryWrites=true&w=majority', {
+	useNewUrlParser: true,
+	useCreateIndex: true,
+	useUnifiedTopology: true
+}).then(() => {
+	console.log("Connected to DB");
+}).catch(err => {
+	console.log('Error:', err.message);
+});
+
+//FOR USING LOCAL mongodb
+/*const mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost:27017/yelp_camp', {
   useNewUrlParser: true,
   useUnifiedTopology: true
 })
 .then(() => console.log('Connected to DB!'))
-.catch(error => console.log(error.message));
+.catch(error => console.log(error.message));*/
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(__dirname + "/public"));
