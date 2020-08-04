@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-	"start": "node app.js" //for smooth running of the web app on heroku
+	"start": "node app.js" 
   },
   "author": "Kapil Choudhary",
   "license": "ISC",
