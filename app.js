@@ -13,11 +13,10 @@ var express         = require("express"),
 //ROUTES REQUIRED
 var campgroundRoutes  = require("./routes/campgrounds"),
     commentRoutes     = require("./routes/comments"),
-    indexRoutes        = require("./routes/index");
-
-const mongoose = require('mongoose');
+    indexRoutes       = require("./routes/index");
 
 //FOR USING mongoDB Atlas
+/*const mongoose = require('mongoose');
 mongoose.connect('mongodb+srv://kapil:opc107@yelpcampdb.0zt0i.mongodb.net/YelpCampDb?retryWrites=true&w=majority', {
 	useNewUrlParser: true,
 	useCreateIndex: true,
@@ -26,16 +25,16 @@ mongoose.connect('mongodb+srv://kapil:opc107@yelpcampdb.0zt0i.mongodb.net/YelpCa
 	console.log("Connected to DB");
 }).catch(err => {
 	console.log('Error:', err.message);
-});
+});*/
 
 //FOR USING LOCAL mongodb
-/*const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/yelp_camp', {
+const mongoose = require('mongoose');
+mongoose.connect(process.env.DATABASEURL, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 })
 .then(() => console.log('Connected to DB!'))
-.catch(error => console.log(error.message));*/
+.catch(error => console.log(error.message));
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(__dirname + "/public"));
@@ -71,6 +70,8 @@ app.use("/", indexRoutes);
 
 /*app.listen(3000, function(){
 	console.log("YelpCamp server listening on port 3000");
-});*/ //for running on local server 
+});*/ //for running on local server//
 
-app.listen(process.env.PORT, process.env.IP); //for running on heroku
+app.listen(process.env.PORT, process.env.IP, function(){
+    console.log("The YelpCamp Server has started");
+}); //for running on heroku
