@@ -15,6 +15,8 @@ var campgroundRoutes  = require("./routes/campgrounds"),
     commentRoutes     = require("./routes/comments"),
     indexRoutes       = require("./routes/index");
 
+var url = process.env.DATABASEURL || "mongodb://localhost:27017/yelp_camp"
+
 //FOR USING mongoDB Atlas
 /*const mongoose = require('mongoose');
 mongoose.connect('mongodb+srv://kapil:opc107@yelpcampdb.0zt0i.mongodb.net/YelpCampDb?retryWrites=true&w=majority', {
@@ -26,10 +28,10 @@ mongoose.connect('mongodb+srv://kapil:opc107@yelpcampdb.0zt0i.mongodb.net/YelpCa
 }).catch(err => {
 	console.log('Error:', err.message);
 });*/
-
+//console.log(process.env.DATABASEURL);
 //FOR USING LOCAL mongodb
 const mongoose = require('mongoose');
-mongoose.connect(process.env.DATABASEURL, {
+mongoose.connect(url, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 })
@@ -68,10 +70,14 @@ app.use("/campgrounds", campgroundRoutes);
 app.use("/campgrounds/:id/comments", commentRoutes);
 app.use("/", indexRoutes);
 
-/*app.listen(3000, function(){
+if(url == "mongodb://localhost:27017/yelp_camp"){
+	app.listen(3000, function(){
 	console.log("YelpCamp server listening on port 3000");
-});*/ //for running on local server//
-
-app.listen(process.env.PORT, process.env.IP, function(){
+}); //for running on local server//
+} else{
+	app.listen(process.env.PORT, process.env.IP, function(){
     console.log("The YelpCamp Server has started");
 }); //for running on heroku
+}
+
+
